@@ -1,0 +1,218 @@
+/* Coloured Folders
+a CSS snippet by Lithou
+This will allow the colouring of the top level folders into sections that "drop down" when opened. 
+This is currently set to be the same colour regardless of theme, but you can change that by copy/pasting the colors from the root section into light/dark theme then changing them according to preference.
+The colours are rainbow coloured and 16 in number by default. They are shades such that white/lightgrey text shows up the best. 
+Some have a bit let contrast (the lighter blue and the yellow) but should still be visible. Again, change them however you would like. 
+The folders are currently 
+*/
+
+/* 
+Updated 2024-0701: Updated selectors to reflect changes in obsidian HTML/CSS layers.
+*/
+:root{
+    /* Primary Folder Universal Attributes */
+    --FoldText: #CCFFFF;  /* This is the colour for the title text of the primary folders */
+    --FoldLineColor: #CCFFFF;
+    --SubfoldText: #FFFFFF; /* This is the folder text colour for secondary and below folders */
+    --SubfileText: #FFFFFF; /* Same but for files */
+    
+    /* Fold Line - This is the line that appears under the main folder titles when expanded */
+    --FoldLineThickness: 2px; 
+    --FoldLineStyle: double;
+    --FoldArrowColor: #330000;
+
+    /* Individual Folder colours */
+    --Fold0: #d32f2fCC;
+    --Fold1: #c2185bCC;
+    --Fold2: #7b1fa2CC;
+    --Fold3: #512da8CC;
+    --Fold4: #303f9fCC;
+    --Fold5: #1976d2CC;
+    --Fold6: #0288d1CC;
+    --Fold7: #0097a7CC;
+    --Fold8: #00796bCC;
+    --Fold9: #388e3cCC;
+    --FoldA: #689f38CC;
+    --FoldB: #afb42bCC;
+    --FoldC: #f9ab25CC;
+    --FoldD: #ff8f00CC;
+    --FoldE: #ef6c00CC;
+    --FoldF: #d84315CC;
+
+    /* Rounded Corner Amount */
+    --corner-radius: 15px; /* Use 0px for square corners. Default 20px. May yield asymetrical results with high numbers.*/
+
+    /* line styles for nesting indicators */
+    --nestlinesize1: 2px;
+    --nestlinestyle1: solid;
+    --nestlinecolor1: #000;
+
+    --nestlinesize2: solid;
+    --nestlinestyle2: 2px;
+    --nestlinecolor2: #000;
+
+    --nestlinesize3: dotted;
+    --nestlinestyle3: 2px;
+    --nestlinecolor3: #000;
+}
+
+
+/* Set up explorer container margins */
+.nav-files-container{
+    margin: 0px 5px;
+    padding: 0px;
+}
+
+/* Remove collapse arrow from top level folders */
+.workspace-leaf-content[data-type="file-explorer"]>.nav-files-container>div>.tree-item.nav-folder>.tree-item-self>.collapse-icon{
+    display: none;
+}
+
+/* Set color for all sub level collapse arrows */
+.workspace-leaf-content[data-type="file-explorer"]>.nav-files-container>div>.tree-item.nav-folder>.tree-item-children .nav-folder-collapse-indicator svg{
+    background-color: var(--FoldArrowColor);
+}
+
+/* Top Level Folder Titles */
+.workspace-leaf-content[data-type="file-explorer"]>.nav-files-container>div>.tree-item.nav-folder>.tree-item-self>.tree-item-inner.nav-folder-title-content{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 18px;
+    color: var(--FoldText);
+    padding-left: 10px;
+    overflow-x: hidden;
+}
+
+/* Rounded borders */
+.workspace-leaf-content[data-type="file-explorer"]>.nav-files-container>div>.tree-item.nav-folder.is-collapsed{
+    border-radius: var(--corner-radius);
+}
+.workspace-leaf-content[data-type="file-explorer"]>.nav-files-container>div>.tree-item.nav-folder>.tree-item-self{
+    border-radius: var(--corner-radius) var(--corner-radius) 0px 0px;
+}
+
+/* Expanded Folder Area (this is the part that expands from each top level folder) */
+.workspace-leaf-content[data-type="file-explorer"]>.nav-files-container>div>.tree-item.nav-folder>.tree-item-children{
+    padding-left: 0px;
+    border-top: var(--FoldLineColor) var(--FoldLineThickness) var(--FoldLineStyle);
+    border-radius: 0px 0px var(--corner-radius) var(--corner-radius);
+    padding-bottom: 12px;
+	margin-left: 0px;
+}
+
+/* Sub-Files and Sub-Folders */
+.workspace-leaf-content[data-type="file-explorer"]>.nav-files-container>div>.tree-item.nav-folder>.tree-item-children div.nav-file-title-content{
+    color: var(--SubfileText);
+	margin-bottom: 0px;
+}
+
+.workspace-leaf-content[data-type="file-explorer"]>.nav-files-container>div>.tree-item.nav-folder>.tree-item-children div.nav-folder-title-content{
+    color: var(--SubfoldText);}
+
+.nav-file-title-content{
+    padding-left: 0px;
+    margin-left: -12px;
+}
+
+/* active file increase font size and removes normal highlight marker */
+.nav-file-title.is-active{ 
+    background-color: #FFFFFF55;
+}
+
+/* Adds hemisphere marker to active file instead */
+.nav-file-title.is-active::before{
+    content: "";
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: var(--FoldText);
+    position: absolute;
+    left: -9px;
+    margin-top: 0px;
+}
+
+
+/* 16 Top level Folders By Starting Digit (0-F)
+These are set for me by leading number/letter which also ensures they are in the correct order when sorted alphabetically
+You can change these to match your use case.
+*/
+    .workspace-leaf-content[data-type="file-explorer"]>.nav-files-container>div>.tree-item.nav-folder>.tree-item-self[data-path^="0"],
+    .workspace-leaf-content[data-type="file-explorer"]>.nav-files-container>div>.tree-item.nav-folder>.tree-item-self[data-path^="0"] + .nav-folder-children{
+    background-color: var(--Fold0);}
+    .workspace-leaf-content[data-type="file-explorer"]>.nav-files-container>div>.tree-item.nav-folder>.tree-item-self[data-path^="1"],
+    .workspace-leaf-content[data-type="file-explorer"]>.nav-files-container>div>.tree-item.nav-folder>.tree-item-self[data-path^="1"] + .nav-folder-children{
+    background-color: var(--Fold1);}
+    .workspace-leaf-content[data-type="file-explorer"]>.nav-files-container>div>.tree-item.nav-folder>.tree-item-self[data-path^="2"],
+    .workspace-leaf-content[data-type="file-explorer"]>.nav-files-container>div>.tree-item.nav-folder>.tree-item-self[data-path^="2"] + .nav-folder-children{
+    background-color: var(--Fold2);}   
+    .workspace-leaf-content[data-type="file-explorer"]>.nav-files-container>div>.tree-item.nav-folder>.tree-item-self[data-path^="3"],
+    .workspace-leaf-content[data-type="file-explorer"]>.nav-files-container>div>.tree-item.nav-folder>.tree-item-self[data-path^="3"] + .nav-folder-children{
+    background-color: var(--Fold3);}   
+    .workspace-leaf-content[data-type="file-explorer"]>.nav-files-container>div>.tree-item.nav-folder>.tree-item-self[data-path^="4"],
+    .workspace-leaf-content[data-type="file-explorer"]>.nav-files-container>div>.tree-item.nav-folder>.tree-item-self[data-path^="4"] + .nav-folder-children{
+    background-color: var(--Fold4);}   
+    .workspace-leaf-content[data-type="file-explorer"]>.nav-files-container>div>.tree-item.nav-folder>.tree-item-self[data-path^="5"],
+    .workspace-leaf-content[data-type="file-explorer"]>.nav-files-container>div>.tree-item.nav-folder>.tree-item-self[data-path^="5"] + .nav-folder-children{
+    background-color: var(--Fold5);}   
+    .workspace-leaf-content[data-type="file-explorer"]>.nav-files-container>div>.tree-item.nav-folder>.tree-item-self[data-path^="6"],
+    .workspace-leaf-content[data-type="file-explorer"]>.nav-files-container>div>.tree-item.nav-folder>.tree-item-self[data-path^="6"] + .nav-folder-children{
+    background-color: var(--Fold6);}   
+    .workspace-leaf-content[data-type="file-explorer"]>.nav-files-container>div>.tree-item.nav-folder>.tree-item-self[data-path^="7"],
+    .workspace-leaf-content[data-type="file-explorer"]>.nav-files-container>div>.tree-item.nav-folder>.tree-item-self[data-path^="7"] + .nav-folder-children{
+    background-color: var(--Fold7);}   
+    .workspace-leaf-content[data-type="file-explorer"]>.nav-files-container>div>.tree-item.nav-folder>.tree-item-self[data-path^="8"],
+    .workspace-leaf-content[data-type="file-explorer"]>.nav-files-container>div>.tree-item.nav-folder>.tree-item-self[data-path^="8"] + .nav-folder-children{
+    background-color: var(--Fold8);}   
+    .workspace-leaf-content[data-type="file-explorer"]>.nav-files-container>div>.tree-item.nav-folder>.tree-item-self[data-path^="9"],
+    .workspace-leaf-content[data-type="file-explorer"]>.nav-files-container>div>.tree-item.nav-folder>.tree-item-self[data-path^="9"] + .nav-folder-children{
+    background-color: var(--Fold9);}   
+    .workspace-leaf-content[data-type="file-explorer"]>.nav-files-container>div>.tree-item.nav-folder>.tree-item-self[data-path^="A"],
+    .workspace-leaf-content[data-type="file-explorer"]>.nav-files-container>div>.tree-item.nav-folder>.tree-item-self[data-path^="A"] + .nav-folder-children{
+    background-color: var(--FoldA);} 
+    .workspace-leaf-content[data-type="file-explorer"]>.nav-files-container>div>.tree-item.nav-folder>.tree-item-self[data-path^="B"],
+    .workspace-leaf-content[data-type="file-explorer"]>.nav-files-container>div>.tree-item.nav-folder>.tree-item-self[data-path^="B"] + .nav-folder-children{
+    background-color: var(--FoldB);} 
+    .workspace-leaf-content[data-type="file-explorer"]>.nav-files-container>div>.tree-item.nav-folder>.tree-item-self[data-path^="C"],
+    .workspace-leaf-content[data-type="file-explorer"]>.nav-files-container>div>.tree-item.nav-folder>.tree-item-self[data-path^="C"] + .nav-folder-children{
+    background-color: var(--FoldC);} 
+    .workspace-leaf-content[data-type="file-explorer"]>.nav-files-container>div>.tree-item.nav-folder>.tree-item-self[data-path^="D"],
+    .workspace-leaf-content[data-type="file-explorer"]>.nav-files-container>div>.tree-item.nav-folder>.tree-item-self[data-path^="D"] + .nav-folder-children{
+    background-color: var(--FoldD);} 
+    .workspace-leaf-content[data-type="file-explorer"]>.nav-files-container>div>.tree-item.nav-folder>.tree-item-self[data-path^="E"],
+    .workspace-leaf-content[data-type="file-explorer"]>.nav-files-container>div>.tree-item.nav-folder>.tree-item-self[data-path^="E"] + .nav-folder-children{
+    background-color: var(--FoldE);} 
+    .workspace-leaf-content[data-type="file-explorer"]>.nav-files-container>div>.tree-item.nav-folder>.tree-item-self[data-path^="F"],
+    .workspace-leaf-content[data-type="file-explorer"]>.nav-files-container>div>.tree-item.nav-folder>.tree-item-self[data-path^="F"] + .nav-folder-children{
+    background-color: var(--FoldF);} 
+
+/* Scrollbars eliminated */
+body:not(.native-scrollbars) ::-webkit-scrollbar{
+    width: 0px;
+    height: 0px;
+}
+
+/* Relationship lines for 2nd, 3rd, and 4th level folders */
+.workspace-leaf-content[data-type="file-explorer"]>.nav-files-container>div>.tree-item.nav-folder>.nav-folder-children>.nav-folder>.nav-folder-children{
+    border-left: var(--nestlinestyle1) var(--nestlinesize1) var(--nestlinecolor1);
+	border-radius: 0px;
+}
+
+.workspace-leaf-content[data-type="file-explorer"]>.nav-files-container>div>.tree-item.nav-folder>.nav-folder-children>.nav-folder>.nav-folder-children>.nav-folder>.nav-folder-children{
+    border-left: var(--nestlinestyle2) var(--nestlinesize2) var(--nestlinecolor2);}
+
+    .workspace-leaf-content[data-type="file-explorer"]>.nav-files-container>div>.tree-item.nav-folder>.nav-folder-children>.nav-folder>.nav-folder-children>.nav-folder>.nav-folder-children>.nav-folder>.nav-folder-children{
+    border-left: var(--nestlinestyle3) var(--nestlinesize3) var(--nestlinecolor3);
+}
+
+.nav-folder.is-collapsed{
+    overflow-x: hidden;  /* This is required to make sure that the main folders are rounded on the bottom corners while collapsed. */
+}
+
+
+
+
+/* Space for Theme Fixes
+
+
+
+*/
